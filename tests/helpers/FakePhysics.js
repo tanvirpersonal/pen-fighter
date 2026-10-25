@@ -28,6 +28,13 @@ export class FakePhysics {
   /** Test helper: give any entry a velocity directly. */
   kick(id, vx, vy) { const e = this.entries.get(id); e.vx = vx; e.vy = vy; this.settledSteps = 0; }
 
+  /** Test helper: shove an entry straight away from the desk centre, hard enough to leave the desk. */
+  knock(id) {
+    const e = this.entries.get(id);
+    const d = Math.hypot(e.x, e.y) || 1;
+    this.kick(id, (e.x / d) * 14, (e.y / d) * 14);
+  }
+
   step() {
     const falls = [];
     this.stepsMoving++;
